@@ -28,7 +28,7 @@ const Categories = () => {
   const handleChange =  async (e, {value}) => {
     try{
       //if user selects a specific category, set showCategories to false and hide categories form cards rendered
-      if(value != 'All'){
+      if(value !== 'All'){
         let res =  await axios.get(`/api/categories/${value}`)
         setProducts(res.data)
         setShowCategories(false)

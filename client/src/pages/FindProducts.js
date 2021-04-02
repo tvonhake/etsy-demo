@@ -7,6 +7,7 @@ const FindProducts = () => {
   const [chosenCategory, setChosenCategory] = useState(null)
   const [products, setProducts] = useState([])
   const [sellers, setSellers] = useState([])
+  const [chosenSeller, setChosenSeller] = useState(false)
 
   const [categories, setCategories] = useState([
     // {key: 'All', text: 'All Products', value: 'All'},
@@ -36,6 +37,7 @@ const FindProducts = () => {
   try{
     let res = await axios.get(`/api/products/${chosenCategory}/${value}`)
     setProducts(res.data)
+    setChosenSeller(true)
   }catch(err){
     alert(err)
   }
@@ -75,6 +77,25 @@ const FindProducts = () => {
     )
   }
 
+  const choiceWarning = () => {
+    if(chosenCategory !== null){
+      if(chosenSeller == false){
+      return (
+        <p>Select a Seller</p>
+      )
+      }else{
+        return(
+          <p>No products match chosen Category and Seller.</p>
+        )
+      }
+    }else{
+      return(
+        <p>Choose a Category</p>
+      )
+    }
+      
+  }
+
 return (
   
   <>  
@@ -105,7 +126,7 @@ return (
       </div>
       </>
     ) : (<h1>"loading"</h1>)}
-    {renderProducts()}
+    {((products.length >= 1)) ? renderProducts() : choiceWarning()}
   </>
 )
 }

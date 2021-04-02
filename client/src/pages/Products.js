@@ -48,15 +48,15 @@ const Products = () => {
     getProducts()
   },[])
 
-  // const loadMore = async () => {
-  //   const page = currentPage + 1;
-  //   if(sellers.length > 0){
-  //   let res = await axios.get(`/api/products?page=${page}`)
-  //   // console.log('loadMore res: ', res.data)
-  //   // sellers.push(createSellerArray(res.data.products))
-  //   }
+  const loadMore = async () => {
+    const page = currentPage + 1;
+    if(sellers.length > 0){
+    let res = await axios.get(`/api/products?page=${page}`)
+    // console.log('loadMore res: ', res.data)
+    // sellers.push(createSellerArray(res.data.products))
+    }
     
-  // }
+  }
 
   //Called in renderSellers to insert each product row
   const renderProducts = (products) => {
@@ -80,14 +80,15 @@ const Products = () => {
   }
 
   //map through sellers array, create table for each seller
-  const renderSellers = () =>{
+  const renderSellers = () => {
     // console.log('renderSellers called')
     // console.log(sellers)
       return (
+        <>
         <List style={styles.scroller}>
           <InfiniteScroll
           pageStart={currentPage}
-          // loadMore={loadMore()}
+          loadMore = {loadMore}
           hasMore={currentPage < totalPages}
           useWindow={false}
           >
@@ -116,6 +117,7 @@ const Products = () => {
             }
           </InfiniteScroll>
         </List>
+        </>
       )
     }
   
